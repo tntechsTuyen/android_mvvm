@@ -9,6 +9,8 @@ import com.vietko.mvvm.data.model.User;
 import com.vietko.mvvm.retrofit.ApiRequest;
 import com.vietko.mvvm.retrofit.RetrofitRequest;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,24 +23,30 @@ public class UserRepository {
         apiRequest = RetrofitRequest.instance().create(ApiRequest.class);
     }
     
-    public LiveData<User> getData(){
-        final MutableLiveData<User> data = new MutableLiveData<>();
-        apiRequest.getUser().enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                Log.d(TAG, "onResponse response:: " + response);
-                if (response.body() != null) {
-                    data.setValue(response.body());
-                    Log.d(TAG, "articles total result:: " + response.body());
-                    Log.d(TAG, "size:: " + response.body());
-                }
-            }
+    public LiveData<List<User>> getData(){
+        final MutableLiveData<List<User>> data = new MutableLiveData<>();
+        try{
 
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                data.setValue(null);
-            }
-        });
+            apiRequest.getUser().enqueue(new Callback<List<User>>() {
+                @Override
+                public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                    Log.d(TAG, "onResponse response:: " + response);
+                    if (response.body() != null) {
+                        data.setValue(response.body());
+                        Log.d(TAG, "articles total result:: " + response.body());
+                        Log.d(TAG, "size:: " + response.body());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<User>> call, Throwable t) {
+                    Log.e(TAG, "onFailure "+t.getMessage());
+                    data.setValue(null);
+                }
+            });
+        }catch (Exception e){
+            Log.e(TAG, "Ex: "+e.getMessage());
+        }
         return data;
     }
 

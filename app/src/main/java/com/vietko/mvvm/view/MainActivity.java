@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         mainViewModel.getUserRepositoryLiveData().observe(this, data -> {
             if(data != null){
-                System.out.println("--------------------------------------------------------------");
+                System.out.println("--------------------------------------------------------------: "+data.size());
             }
         });
     }
