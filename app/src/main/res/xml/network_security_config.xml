@@ -3,6 +3,7 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="false">localhost</domain>
         <domain includeSubdomains="false">192.168.0.5</domain>
+        <domain includeSubdomains="false">connect.garena.com</domain>
     </domain-config>
     <base-config cleartextTrafficPermitted="true">
         <trust-anchors>
